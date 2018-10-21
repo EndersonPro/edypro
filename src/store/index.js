@@ -19,7 +19,8 @@ export default new Vuex.Store({
     },
     mutations: {
         LOAD_RESULT: (state, payload) => {
-            console.log(payload['data'].audiostream);
+            state.listAudios = payload['data'].audiostream
+            state.listVideos = payload['data'].videostream
             state.videoInfo = {
                 title: payload['data'].titulo,
                 image: payload['data'].imagen,

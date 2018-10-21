@@ -13,6 +13,7 @@
                 </v-flex>
                 <v-flex md3>
                     <v-btn outline large type="submit" color="primary">Buscar</v-btn>
+                    <!-- <router-link outline large to="/result">click</router-link> -->
                 </v-flex>
             </v-layout>
         </v-card>
@@ -26,14 +27,19 @@ export default {
       query: "tUi5MUTAdG0",
       valid: true,
       youTubeRules: [
-        v => !!v || "Por favor, realice una busqueda o coloque el link del video"
+        v =>
+          !!v || "Por favor, realice una busqueda o coloque el link del video"
       ]
     };
   },
   methods: {
     Search: function() {
       if (this.$refs.form.validate()) {
+        /* Ejecutando accion del store */
         this.$store.dispatch("loadResult", this.query);
+
+        /* Cambiando de ruta */
+        this.$router.push({ name: "Result" });
       }
     },
     /* No la uso por ahora */

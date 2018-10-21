@@ -6,9 +6,10 @@
           <Search/>
         </v-flex>
       </v-layout>
+      
       <v-layout row wrap>
         <v-flex md12>
-          <ItemYoutube/>
+          <router-view/>
         </v-flex>
       </v-layout>
     </v-container>
