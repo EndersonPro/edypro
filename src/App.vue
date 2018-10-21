@@ -1,10 +1,15 @@
 <template>
   <v-app>
-    <v-container>
+    <v-container fluid grid-list-md text-xs-center>
       <v-layout row wrap>
         <v-flex md12>
-          <Search></Search>
-      </v-flex>
+          <Search/>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap>
+        <v-flex md12>
+          <ItemYoutube/>
+        </v-flex>
       </v-layout>
     </v-container>
 
@@ -16,6 +21,7 @@
 
 <script>
 import Search from './components/Search'
+import ItemYoutube from './components/ItemYoutube'
 
 export default {
   data() {
@@ -24,7 +30,8 @@ export default {
     };
   },
   components:{
-    Search
+    Search,
+    ItemYoutube
   }
 };
 </script>

@@ -1,30 +1,43 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state:{
-        listVideos:[],
-        listAudios:[]
+    state: {
+        Search: '',
+        listVideos: [],
+        listAudios: [],
+        videoInfo: null
     },
-    getters:{
+    getters: {
         getListVideos: state => state.listVideos,
-        getListAudios: state => state.listAudios
+        getListAudios: state => state.listAudios,
+        getSearch: state => state.Search,
+        getvideoInfo: state => state.videoInfo
     },
-    mutations:{
-        LOAD_RESULT:(state,payload)=>{
-            state.listVideos = payload.Videos
-            state.listAudios = payload.Audios
+    mutations: {
+        LOAD_RESULT: (state, payload) => {
+            console.log(payload['data'].audiostream);
+            state.videoInfo = {
+                title: payload['data'].titulo,
+                image: payload['data'].imagen,
+                duration: payload['data'].duracion
+            }
+            /* state.listAudios = payload.Audios
+            state.listVideos = payload.Videos */
         }
     },
-    actions:{
-        loadResult:(context, data)=>{
-            var result = {
-                Audios: data.audiostream,
-                Videoos: data.videostream
-            }
-            context.commit('LOAD_RESULT', result)
+    actions: {
+        loadResult: (context, query) => {
+        
+            axios.get(`http://127.0.0.1:5000/api/${query}`)
+                .then(data => {
+                    context.commit('LOAD_RESULT', data.data)
+                })
+                .catch(err => console.log(err))
+
         }
     }
 })
