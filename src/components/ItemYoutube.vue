@@ -100,12 +100,23 @@ export default {
                   "x-decompressed-content-length"
                 );
             if (totalLength !== null) {
-              self.valueDownload = Math.round((progressEvent.loaded * 100) / totalLength)
+              self.valueDownload = Math.round(
+                (progressEvent.loaded * 100) / totalLength
+              );
             }
           }
         })
         .then(res => {
-          download(res.data, name + ".mp3", "audio/mp3");
+          const url = window.URL.createObjectURL(res.data, {
+            type: "audio/mp3"
+          });
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", name + ".mp3");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          /* download(res.data, name + ".mp3", "audio/mp3"); */
         });
     },
     updateProgress(evt) {
