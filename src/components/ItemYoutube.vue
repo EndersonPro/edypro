@@ -1,6 +1,6 @@
 <template>
-<div>
-    <v-layout v-if="itemYoutube != null" row wrap>
+<div v-if="itemYoutube != null">
+    <v-layout row wrap>
         <v-flex md12>
           <v-card >
             <v-img
@@ -17,7 +17,8 @@
         </v-flex>
     </v-layout>
     <v-layout row fluid>
-        <v-flex md12>
+        <v-flex justify-center md6>
+            <span class="font-weight-light"> Progreso de descarga </span>
             <v-progress-circular
                 :rotate="360"
                 :size="100"
@@ -27,6 +28,7 @@
                 >
                 {{ valueDownload }}
             </v-progress-circular>
+            <span class="font-weight-light"> {{ CurrentDownload }} </span>
         </v-flex>
     </v-layout>
     <v-layout v-if="itemYoutube != null" row fluid>
@@ -45,9 +47,14 @@
                     <v-spacer></v-spacer>
                 </v-toolbar>
                 <v-list>
-                    <v-list-tile v-for="audio of listAudios" :key="audio.tamano">
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ audio.tamano }}</v-list-tile-title>
+                    <v-list-tile :class="{Recommended:downloadRecommended(audio.extencion)}"
+                                    v-for="audio of listAudios" 
+                                    :key="audio.tamano">
+                        <v-list-tile-content >
+                            <v-list-tile-title>
+                                {{  bytesToSize(audio.tamano)  }}                                
+                                <strong v-if="downloadRecommended(audio.extencion)"> - Recomendado</strong>
+                            </v-list-tile-title>
                             <v-list-tile-sub-title>Bitrate: {{ audio.bitrate }} - Extention: {{ audio.extencion }} </v-list-tile-sub-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
@@ -63,16 +70,19 @@
 
 <script>
 import axios from "axios";
-import download from "downloadjs";
 
 /* Nota de la noche */
 /*  Creo que es mejor revisa como estan funcionando la API, los resultados en cuanto a
     calidad no son los esperados, no me gusta. */
 
+/* Nota de la misma noche */
+/* Esta funcionando bien la API, el archivo se descarga correctamente... Continuar con detalles */
+
 export default {
   data() {
     return {
-      valueDownload: 0
+      valueDownload: 0,
+      CurrentDownload: 'Ninguna descarga en curso'
     };
   },
   computed: {
@@ -89,6 +99,7 @@ export default {
   methods: {
     Download(url, name) {
       const self = this;
+      this.CurrentDownload = 'Nueva descarga en curso'
       axios
         .get(url, {
           responseType: "blob",
@@ -116,15 +127,27 @@ export default {
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
+          self.CurrentDownload = 'Ninguna descarga en curso'
+          self.valueDownload = 0
           /* download(res.data, name + ".mp3", "audio/mp3"); */
         });
     },
-    updateProgress(evt) {
-      if (evt.lengthComputable) {
-        var percentComplete = (evt.loaded / evt.total) * 100;
-        console.log(percentComplete + "% completed");
-      }
+    downloadRecommended(item) {
+      return item == "m4a";
+    },
+    /* Metodo para que los humanos entiendan cuando pesa el archivo */
+    bytesToSize(bytes) {
+      var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+      if (bytes == 0) return "0 Byte";
+      var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+      return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
     }
   }
 };
 </script>
+
+<style>
+.Recommended {
+  background-color: #2ecc71;
+}
+</style>
