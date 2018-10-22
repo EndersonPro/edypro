@@ -24,7 +24,7 @@
 export default {
   data() {
     return {
-      query: "tUi5MUTAdG0",
+      query: "HTNGTJHPEGM",
       valid: true,
       youTubeRules: [
         v =>

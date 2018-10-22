@@ -32,7 +32,7 @@
         </v-flex>
     </v-layout>
     <v-layout v-if="itemYoutube != null" row fluid>
-        <v-flex md6 sm12>
+        <v-flex xs6 sm6 md6>
             <v-card>
                 <v-toolbar color="cyan" dark>
                     <v-toolbar-title>Download Video</v-toolbar-title>
@@ -56,7 +56,7 @@
                 </v-list>
             </v-card>
         </v-flex>
-        <v-flex md6 sm12>
+        <v-flex xs6 sm6 md6>
             <v-card>
                 <v-toolbar color="cyan" dark>
                     <v-toolbar-title>Download Mp3</v-toolbar-title>
@@ -80,6 +80,10 @@
                 </v-list>
             </v-card>
         </v-flex>
+    </v-layout>
+
+    <v-layout v-if="itemYoutube != null" row fluid>
+      
     </v-layout>
 </div>
 </template>
@@ -155,7 +159,7 @@ export default {
     downloadRecommended(item) {
       return item == "m4a" || item == "mp4";
     },
-    
+
     /* Metodo para que los humanos entiendan cuando pesa el archivo */
     bytesToSize(bytes) {
       var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
