@@ -33,7 +33,7 @@ export default new Vuex.Store({
     actions: {
         loadResult: (context, query) => {
             let local = 'http://127.0.0.1:5000/api/'
-            let APIWEB = 'http://endersonpro.pythonanywhere.com/api/'
+            let APIWEB = 'https://endersonpro.pythonanywhere.com/api/'
 
             axios.get(`${APIWEB}${query}`)
                 .then(data => {

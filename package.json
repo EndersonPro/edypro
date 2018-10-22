@@ -12,7 +12,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.16.4",
-    "fs": "0.0.1-security",
     "vue": "^2.5.3",
     "vue-router": "^3.0.1",
     "vuetify": "^1.0.0"
