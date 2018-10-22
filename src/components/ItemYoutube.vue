@@ -82,7 +82,7 @@ export default {
   data() {
     return {
       valueDownload: 0,
-      CurrentDownload: 'Ninguna descarga en curso'
+      CurrentDownload: "Ninguna descarga en curso"
     };
   },
   computed: {
@@ -99,10 +99,15 @@ export default {
   methods: {
     Download(url, name) {
       const self = this;
-      this.CurrentDownload = 'Nueva descarga en curso'
+      this.CurrentDownload = "Nueva descarga en curso";
+
+      /* Me ayuda con el error del Cors Origin */
+      let pro = 'https://cors-anywhere.herokuapp.com/'
+
       axios
-        .get(url, {
+        .get(pro + url, {
           responseType: "blob",
+          "Access-Control-Allow-Origin": "*",
           onDownloadProgress: progressEvent => {
             const totalLength = progressEvent.lengthComputable
               ? progressEvent.total
@@ -127,8 +132,8 @@ export default {
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-          self.CurrentDownload = 'Ninguna descarga en curso'
-          self.valueDownload = 0
+          self.CurrentDownload = "Ninguna descarga en curso";
+          self.valueDownload = 0;
           /* download(res.data, name + ".mp3", "audio/mp3"); */
         });
     },
