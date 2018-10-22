@@ -38,6 +38,22 @@
                     <v-toolbar-title>Download Video</v-toolbar-title>
                     <v-spacer></v-spacer>
                 </v-toolbar>
+                <v-list>
+                    <v-list-tile :class="{Recommended:downloadRecommended(video.extencion)}"
+                                    v-for="video of listVideos" 
+                                    :key="video.tamano">
+                        <v-list-tile-content >
+                            <v-list-tile-title>
+                                {{  bytesToSize(video.tamano)  }}                                
+                                <strong v-if="downloadRecommended(video.extencion)"> - Recomendado</strong>
+                            </v-list-tile-title>
+                            <v-list-tile-sub-title>Resolucion: {{ video.resolucion }} - Extention: {{ video.extencion }} </v-list-tile-sub-title>
+                        </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-btn @click="Download(video.url, itemYoutube.title,'video',video.extencion)" small>Descargar</v-btn>
+                        </v-list-tile-action>
+                    </v-list-tile>
+                </v-list>
             </v-card>
         </v-flex>
         <v-flex md6 sm12>
@@ -58,7 +74,7 @@
                             <v-list-tile-sub-title>Bitrate: {{ audio.bitrate }} - Extention: {{ audio.extencion }} </v-list-tile-sub-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <v-btn @click="Download(audio.url, itemYoutube.title)" small>Descargar</v-btn>
+                            <v-btn @click="Download(audio.url, itemYoutube.title, 'audio','mp3')" small>Descargar</v-btn>
                         </v-list-tile-action>
                     </v-list-tile>
                 </v-list>
@@ -97,17 +113,16 @@ export default {
     }
   },
   methods: {
-    Download(url, name) {
+    Download(url, name, type, extention) {
       const self = this;
       this.CurrentDownload = "Nueva descarga en curso";
 
       /* Me ayuda con el error del Cors Origin */
-      let pro = 'https://cors-anywhere.herokuapp.com/'
+      let pro = "https://cors-anywhere.herokuapp.com/";
 
       axios
         .get(pro + url, {
           responseType: "blob",
-          "Access-Control-Allow-Origin": "*",
           onDownloadProgress: progressEvent => {
             const totalLength = progressEvent.lengthComputable
               ? progressEvent.total
@@ -124,11 +139,11 @@ export default {
         })
         .then(res => {
           const url = window.URL.createObjectURL(res.data, {
-            type: "audio/mp3"
+            type: `${type}/${extention}`
           });
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", name + ".mp3");
+          link.setAttribute("download", name + "." + extention);
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
@@ -138,8 +153,9 @@ export default {
         });
     },
     downloadRecommended(item) {
-      return item == "m4a";
+      return item == "m4a" || item == "mp4";
     },
+    
     /* Metodo para que los humanos entiendan cuando pesa el archivo */
     bytesToSize(bytes) {
       var sizes = ["Bytes", "KB", "MB", "GB", "TB"];

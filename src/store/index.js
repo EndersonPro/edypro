@@ -32,8 +32,10 @@ export default new Vuex.Store({
     },
     actions: {
         loadResult: (context, query) => {
-        
-            axios.get(`http://127.0.0.1:5000/api/${query}`)
+            let local = 'http://127.0.0.1:5000/api/'
+            let APIWEB = 'http://endersonpro.pythonanywhere.com/api/'
+
+            axios.get(`${APIWEB}${query}`)
                 .then(data => {
                     context.commit('LOAD_RESULT', data.data)
                 })
