@@ -9,13 +9,15 @@ export default new Vuex.Store({
         Search: '',
         listVideos: [],
         listAudios: [],
-        videoInfo: null
+        videoInfo: null,
+        tailDownload: []
     },
     getters: {
         getListVideos: state => state.listVideos,
         getListAudios: state => state.listAudios,
         getSearch: state => state.Search,
-        getvideoInfo: state => state.videoInfo
+        getvideoInfo: state => state.videoInfo,
+        gettailDownload: state=>state.tailDownload
     },
     mutations: {
         LOAD_RESULT: (state, payload) => {
@@ -28,6 +30,9 @@ export default new Vuex.Store({
             }
             /* state.listAudios = payload.Audios
             state.listVideos = payload.Videos */
+        },
+        ADD_DOWNLOAD: (state, payload) =>{
+            state.tailDownload.push(payload)
         }
     },
     actions: {
@@ -41,6 +46,10 @@ export default new Vuex.Store({
                 })
                 .catch(err => console.log(err))
 
+        },
+        addToTailDownload: (context, data)=>{
+            console.log(data);
+            context.commit('ADD_DOWNLOAD', data)
         }
     }
 })

@@ -1,22 +1,21 @@
 <template>
     <v-form @submit.prevent="Search()" ref="form" v-model="valid" lazy-validation>
-        <v-card aling-center>
-            <v-layout row>
-                <v-flex md9>
+        
+            <v-layout align-center justify-center>
+                <v-flex md8 xs8 sm8>
                     <v-text-field 
                         required
-                        outline
-                        label="Busqueda"
+                        label="Busqueda / ID / URL "
                         :rules="youTubeRules"
                         v-model="query">
                     </v-text-field>
                 </v-flex>
-                <v-flex md3>
+                <v-flex md3 xs3 sm3>
                     <v-btn outline large type="submit" color="primary">Buscar</v-btn>
                     <!-- <router-link outline large to="/result">click</router-link> -->
                 </v-flex>
             </v-layout>
-        </v-card>
+        
     </v-form>
 </template>
 

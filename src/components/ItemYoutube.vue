@@ -47,10 +47,10 @@
                                 {{  bytesToSize(video.tamano)  }}                                
                                 <strong v-if="downloadRecommended(video.extencion)"> - Recomendado</strong>
                             </v-list-tile-title>
-                            <v-list-tile-sub-title>Resolucion: {{ video.resolucion }} - Extention: {{ video.extencion }} </v-list-tile-sub-title>
+                            <v-list-tile-sub-title>Resolucion: {{ video.resolucion }}</v-list-tile-sub-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <v-btn @click="Download(video.url, itemYoutube.title,'video',video.extencion)" small>Descargar</v-btn>
+                            <v-btn @click="addToTailDownload(video, itemYoutube.title,'video',video.extencion, itemYoutube.image)" small>Agregar</v-btn>
                         </v-list-tile-action>
                     </v-list-tile>
                 </v-list>
@@ -71,10 +71,10 @@
                                 {{  bytesToSize(audio.tamano)  }}                                
                                 <strong v-if="downloadRecommended(audio.extencion)"> - Recomendado</strong>
                             </v-list-tile-title>
-                            <v-list-tile-sub-title>Bitrate: {{ audio.bitrate }} - Extention: {{ audio.extencion }} </v-list-tile-sub-title>
+                            <v-list-tile-sub-title>Bitrate: {{ audio.bitrate }}</v-list-tile-sub-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <v-btn @click="Download(audio.url, itemYoutube.title, 'audio','mp3')" small>Descargar</v-btn>
+                            <v-btn @click="addToTailDownload(audio, itemYoutube.title, 'audio','mp3', itemYoutube.image)" small>Agregar</v-btn>
                         </v-list-tile-action>
                     </v-list-tile>
                 </v-list>
@@ -117,6 +117,10 @@ export default {
     }
   },
   methods: {
+    addToTailDownload(info, name, type, extention, img){
+        let data = { info, name, type, extention, img } 
+        this.$store.dispatch("addToTailDownload", data);
+    },
     Download(url, name, type, extention) {
       const self = this;
       this.CurrentDownload = "Nueva descarga en curso";
@@ -156,6 +160,8 @@ export default {
           /* download(res.data, name + ".mp3", "audio/mp3"); */
         });
     },
+
+    /* Metodo para recomendar una descarga */
     downloadRecommended(item) {
       return item == "m4a" || item == "mp4";
     },
