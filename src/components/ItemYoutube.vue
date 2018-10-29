@@ -1,7 +1,7 @@
 <template>
 <div v-if="itemYoutube != null">
     <v-layout row>
-        <v-flex md12>
+        <v-flex xs6 sm6 md6 lg6 xl6>
           <v-card >
             <v-img
             :src="itemYoutube.image"
@@ -15,24 +15,7 @@
                 </v-card-title>
             </v-card>
         </v-flex>
-    </v-layout>
-    <!-- <v-layout row fluid>
-        <v-flex justify-center md6>
-            <span class="font-weight-light"> Progreso de descarga </span>
-            <v-progress-circular
-                :rotate="360"
-                :size="100"
-                :width="15"
-                :value="valueDownload"
-                color="teal"
-                >
-                {{ valueDownload }}
-            </v-progress-circular>
-            <span class="font-weight-light"> {{ CurrentDownload }} </span>
-        </v-flex>
-    </v-layout> -->
-    <v-layout v-if="itemYoutube != null" row>
-        <v-flex xs6 sm6 md6>
+        <v-flex xs6 sm6 md6 lg6 xl6>
             <v-card>
                 <v-toolbar color="cyan" dark>
                     <v-toolbar-title>Download Video</v-toolbar-title>
@@ -56,7 +39,26 @@
                 </v-list>
             </v-card>
         </v-flex>
-        <v-flex xs6 sm6 md6>
+
+    </v-layout>
+    <!-- <v-layout row fluid>
+        <v-flex justify-center md6>
+            <span class="font-weight-light"> Progreso de descarga </span>
+            <v-progress-circular
+                :rotate="360"
+                :size="100"
+                :width="15"
+                :value="valueDownload"
+                color="teal"
+                >
+                {{ valueDownload }}
+            </v-progress-circular>
+            <span class="font-weight-light"> {{ CurrentDownload }} </span>
+        </v-flex>
+    </v-layout> -->
+    <v-layout v-if="itemYoutube != null" row>
+        
+        <v-flex xs6 sm6 md6 lg6 xl6>
             <v-card>
                 <v-toolbar color="cyan" dark>
                     <v-toolbar-title>Download Mp3</v-toolbar-title>

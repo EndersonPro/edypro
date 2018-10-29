@@ -1,12 +1,16 @@
 <template>
     <div>
     <v-layout row>
-        <v-card color="blue-grey" dark tile flat>
+        <v-card v-if="items.length != null" color="blue-grey" dark tile flat>
             <v-card-text>{{ info }}</v-card-text>
         </v-card>
+        <v-card v-else color="red lighten-2" dark tile flat>
+            <v-card-text>{{ err }}</v-card-text>
+        </v-card>
+        
     </v-layout>
     <v-layout row>
-        <v-flex xs12 sm12>
+        <v-flex xs12 sm12 md12 lg12 xl12>
             <v-card>
                 <v-list two-line subheader>
                     <v-list-tile v-for="item of items" avatar :key="item.name + Math.random(99999)">
@@ -44,7 +48,8 @@
 export default {
   data() {
     return {
-      info: "Esta es la cola de descargas, podrás descargar todos los vídeos / Audios agregados, descargar individual o eliminar cualquier ítem."
+      info: "Esta es la cola de descargas, podrás descargar todos los vídeos / Audios agregados, descargar individual o eliminar cualquier ítem.",
+      err: "No hay nada agregado en la cola de descarga, por favor realice una busqueda y agrege algo para descargar.. Estamos ansiosos por descargar :)"
     };
   },
   computed: {

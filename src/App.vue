@@ -3,7 +3,7 @@
     <v-container align-content-center>
 
       <v-layout row>
-        <v-flex md12 xs12>
+        <v-flex xs12 sm12 md12 lg12 xl12>
           <v-card>
             <v-card-text>
               <p class="text-xs-center text-md-center display-2 font-weight-light font-italic">{{name}}</p>
@@ -13,10 +13,10 @@
       </v-layout>
 
      <v-layout row>
-       <v-flex md4 xs4 sm4 lg4 xl4>
+       <v-flex md3 xs3 sm3 lg3 xl3>
           <Nav></Nav>
         </v-flex>
-        <v-flex md8 xs8 sm8 lg8 xl8>
+        <v-flex md9 xs9 sm9 lg9 xl9>
           <transition name="moveInUp">
             <router-view/>
           </transition>
