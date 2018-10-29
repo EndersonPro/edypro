@@ -33,6 +33,10 @@ export default new Vuex.Store({
         },
         ADD_DOWNLOAD: (state, payload) =>{
             state.tailDownload.push(payload)
+        },
+        DELETE_LIST_DOWNLOAD:(state, payload)=>{
+            var index = state.tailDownload.indexOf(payload);
+            if (index !== -1) state.tailDownload.splice(index, 1);
         }
     },
     actions: {
@@ -48,8 +52,10 @@ export default new Vuex.Store({
 
         },
         addToTailDownload: (context, data)=>{
-            console.log(data);
             context.commit('ADD_DOWNLOAD', data)
+        },
+        deleteToTailDownload: (context, data)=>{
+            context.commit('DELETE_LIST_DOWNLOAD', data)
         }
     }
 })

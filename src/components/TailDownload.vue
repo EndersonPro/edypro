@@ -19,9 +19,9 @@
                             <v-list-tile-sub-title>{{ item.type }}</v-list-tile-sub-title>
                         </v-list-tile-content>
 
-                        <v-list-tile-action>
-                            <v-btn icon ripple>
-                                <v-icon color="grey lighten-1">info</v-icon>
+                        <v-list-tile-action @click="deleteItem(item)">
+                            <v-btn  icon ripple>
+                                <v-icon color="red lighten-1">delete</v-icon>
                             </v-btn>
                         </v-list-tile-action>
                     </v-list-tile>
@@ -43,6 +43,11 @@ export default {
     items() {
       return this.$store.getters.gettailDownload;
     }
+  },
+  methods:{
+      deleteItem(item){
+          this.$store.dispatch('deleteToTailDownload', item)
+      }
   }
 };
 </script>
