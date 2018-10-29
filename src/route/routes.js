@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import ItemYoutube from '../components/ItemYoutube'
 import Search from '../components/Search'
 import Tail from '../components/TailDownload'
+import About from '../components/About'
 
 
 Vue.use(Router)
@@ -15,7 +16,7 @@ export default new Router({
             component: Search
         },
         {
-            path:'/result',
+            path:'/resultado',
             name:'Result',
             component: ItemYoutube
         },
@@ -23,6 +24,11 @@ export default new Router({
             path:'/cola',
             name:'Tail',
             component: Tail
+        },
+        {
+            path:'/sobre-mi',
+            name:'About',
+            component: About
         }
 
     ],

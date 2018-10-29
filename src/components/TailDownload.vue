@@ -19,11 +19,19 @@
                             <v-list-tile-sub-title>{{ item.type }}</v-list-tile-sub-title>
                         </v-list-tile-content>
 
-                        <v-list-tile-action @click="deleteItem(item)">
-                            <v-btn  icon ripple>
+
+                        <v-list-tile-action >
+                            <v-btn @click="downloadItem(item)"  icon ripple>
+                                <v-icon color="green lighten-1">save_alt</v-icon>
+                            </v-btn>
+                        </v-list-tile-action>
+
+                        <v-list-tile-action >
+                            <v-btn @click="deleteItem(item)" icon ripple>
                                 <v-icon color="red lighten-1">delete</v-icon>
                             </v-btn>
                         </v-list-tile-action>
+                        
                     </v-list-tile>
                 </v-list>
             </v-card>
@@ -47,6 +55,9 @@ export default {
   methods:{
       deleteItem(item){
           this.$store.dispatch('deleteToTailDownload', item)
+      },
+      downloadItem(item){
+          this.$store.dispatch('downloadItem', item)
       }
   }
 };

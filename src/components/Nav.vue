@@ -24,7 +24,8 @@ export default {
     return {
       items: [
         { title: "Buscar", icon: "search", name: "Search" },
-        { title: "Agregados", icon: "reorder", name: "Tail" }
+        { title: "Agregados", icon: "reorder", name: "Tail" },
+        { title: "Sobre mi", icon: "info", name: "About" }
       ],
       right: null
     };

@@ -1,6 +1,6 @@
 <template>
 <div v-if="itemYoutube != null">
-    <v-layout row wrap>
+    <v-layout row>
         <v-flex md12>
           <v-card >
             <v-img
@@ -16,7 +16,7 @@
             </v-card>
         </v-flex>
     </v-layout>
-    <v-layout row fluid>
+    <!-- <v-layout row fluid>
         <v-flex justify-center md6>
             <span class="font-weight-light"> Progreso de descarga </span>
             <v-progress-circular
@@ -30,8 +30,8 @@
             </v-progress-circular>
             <span class="font-weight-light"> {{ CurrentDownload }} </span>
         </v-flex>
-    </v-layout>
-    <v-layout v-if="itemYoutube != null" row fluid>
+    </v-layout> -->
+    <v-layout v-if="itemYoutube != null" row>
         <v-flex xs6 sm6 md6>
             <v-card>
                 <v-toolbar color="cyan" dark>
@@ -81,16 +81,10 @@
             </v-card>
         </v-flex>
     </v-layout>
-
-    <v-layout v-if="itemYoutube != null" row fluid>
-      
-    </v-layout>
 </div>
 </template>
 
 <script>
-import axios from "axios";
-
 /* Nota de la noche */
 /*  Creo que es mejor revisa como estan funcionando la API, los resultados en cuanto a
     calidad no son los esperados, no me gusta. */
@@ -99,12 +93,6 @@ import axios from "axios";
 /* Esta funcionando bien la API, el archivo se descarga correctamente... Continuar con detalles */
 
 export default {
-  data() {
-    return {
-      valueDownload: 0,
-      CurrentDownload: "Ninguna descarga en curso"
-    };
-  },
   computed: {
     itemYoutube() {
       return this.$store.getters.getvideoInfo;
@@ -121,51 +109,10 @@ export default {
         let data = { info, name, type, extention, img } 
         this.$store.dispatch("addToTailDownload", data);
     },
-    Download(url, name, type, extention) {
-      const self = this;
-      this.CurrentDownload = "Nueva descarga en curso";
-
-      /* Me ayuda con el error del Cors Origin */
-      let pro = "https://cors-anywhere.herokuapp.com/";
-
-      axios
-        .get(pro + url, {
-          responseType: "blob",
-          onDownloadProgress: progressEvent => {
-            const totalLength = progressEvent.lengthComputable
-              ? progressEvent.total
-              : progressEvent.target.getResponseHeader("content-length") ||
-                progressEvent.target.getResponseHeader(
-                  "x-decompressed-content-length"
-                );
-            if (totalLength !== null) {
-              self.valueDownload = Math.round(
-                (progressEvent.loaded * 100) / totalLength
-              );
-            }
-          }
-        })
-        .then(res => {
-          const url = window.URL.createObjectURL(res.data, {
-            type: `${type}/${extention}`
-          });
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", name + "." + extention);
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          self.CurrentDownload = "Ninguna descarga en curso";
-          self.valueDownload = 0;
-          /* download(res.data, name + ".mp3", "audio/mp3"); */
-        });
-    },
-
     /* Metodo para recomendar una descarga */
     downloadRecommended(item) {
       return item == "m4a" || item == "mp4";
     },
-
     /* Metodo para que los humanos entiendan cuando pesa el archivo */
     bytesToSize(bytes) {
       var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
