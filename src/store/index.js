@@ -13,7 +13,8 @@ export default new Vuex.Store({
         tailDownload: [],
         currentDownload: false,
         ValueDownload: 0,
-        searching: false
+        searching: false,
+        VideosResultSearch: []
     },
     getters: {
         getListVideos: state => state.listVideos,
@@ -23,7 +24,8 @@ export default new Vuex.Store({
         gettailDownload: state => state.tailDownload,
         getcurrentDownload: state => state.currentDownload,
         getValueDownload: state => state.ValueDownload,
-        getSearching: state => state.searching
+        getSearching: state => state.searching,
+        getVideosResultSearch: state => state.VideosResultSearch 
     },
     mutations: {
         LOAD_RESULT: (state, payload) => {
@@ -47,6 +49,10 @@ export default new Vuex.Store({
         },
         CURRENT_DOWNLOAD: (state, payload) => {
             state.currentDownload = payload
+        },
+        LOAD_LIST_VIDEOS_RESULT:(state, payload) => {
+            console.log(payload.data);
+            state.VideosResultSearch = payload.query != '' ? payload.data : null
         }
     },
     actions: {
@@ -115,6 +121,9 @@ export default new Vuex.Store({
                     context.commit('CURRENT_DOWNLOAD', false)
                     context.state.ValueDownload = 0
                 });
+        },
+        loadListVideosResult(context, data){
+            context.commit('LOAD_LIST_VIDEOS_RESULT', data)
         }
     }
 })

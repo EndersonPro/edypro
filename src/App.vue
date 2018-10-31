@@ -22,8 +22,6 @@
           </transition>
         </v-flex>
       </v-layout>
-
-      
       
       <!-- <v-layout row wrap>
         <v-flex md12>
