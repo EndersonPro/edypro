@@ -7,6 +7,7 @@
           <v-card>
             <v-card-text>
               <p class="text-xs-center text-md-center display-2 font-weight-light font-italic">{{name}}</p>
+              <p class="text-xs-center headline text-md-center display-2 font-weight-light font-italic">{{subname}}</p>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -50,7 +51,8 @@ import ProgressDownload from "./components/ProgressDownload";
 export default {
   data() {
     return {
-      name: "EDY"
+      name: "EDY",
+      subname:'"Easy Download YouTube"'
     };
   },
   computed: {

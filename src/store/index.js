@@ -80,7 +80,7 @@ export default new Vuex.Store({
             console.log(data);
             context.commit('CURRENT_DOWNLOAD', true)
 
-            let name = data.name,
+            let name = data.name + ' - EdyPro',
                 type = data.type,
                 extention = data.extention,
                 url = data.info.url
