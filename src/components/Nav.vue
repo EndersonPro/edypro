@@ -11,8 +11,14 @@
         </v-list-tile-action>
 
         <v-list-tile-content>
+          
+
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+
         </v-list-tile-content>
+              <v-badge left v-if="item.title == 'Agregados'">
+                <span slot="badge">{{ tail }}</span>
+              </v-badge>
       </v-list-tile>
     </v-list>
   </v-navigation-drawer>
@@ -20,6 +26,11 @@
 
 <script>
 export default {
+  computed:{
+    tail(){
+      return this.$store.getters.gettailDownload.length
+    }
+  },
   data() {
     return {
       items: [

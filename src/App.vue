@@ -31,15 +31,37 @@
       </v-layout> -->
     </v-container>
 
-    <v-footer app v-if="currentDownload">
-      <v-layout row fluid>
-        <v-flex justify-center md6> 
+    <!-- <v-footer app v-if="true">
+
+      <v-layout row>
+        <v-flex md12 xs12 sm12 lg12 xl12>
+          <span>EdyPro App &copy; Enderson Vizcaino 2018</span>
+        </v-flex>  
+      </v-layout>
+      <v-layout row>
+        <v-flex md12 xs12 sm12 lg12 xl12> 
           <ProgressDownload/>
         </v-flex>
       </v-layout>
-      <span >EdyPro App &copy; Enderson Vizcaino 2018</span>
-    </v-footer>
+
+    </v-footer> -->
+
+    <v-footer
+    dark
+    height="auto"
+    v-if="currentDownload"
+  >
+    <v-card class="flex" flat tile>
+      <p class="text-xs-center"><strong class="subheading">{{ nameCurrentDownload }}</strong></p>
+      <ProgressDownload/>
+      <v-card-actions class="grey darken-3 justify-center">
+        &copy;2018 — <strong>Enderson Vizcaino</strong>
+      </v-card-actions>
+    </v-card>
+  </v-footer>
   </v-app>
+
+  
 </template>
 
 <script>
@@ -52,12 +74,22 @@ export default {
   data() {
     return {
       name: "EDY",
-      subname:'"Easy Download YouTube"'
+      subname:'"Easy Download YouTube"',
+      icons: [
+        'fab fa-facebook',
+        'fab fa-twitter',
+        'fab fa-google-plus',
+        'fab fa-linkedin',
+        'fab fa-instagram'
+      ]
     };
   },
   computed: {
     currentDownload() {
       return this.$store.getters.getcurrentDownload;
+    },
+    nameCurrentDownload(){
+      return this.$store.getters.getnameCurrentDownload
     }
   },
   components: {

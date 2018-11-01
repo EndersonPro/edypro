@@ -2,9 +2,11 @@
 <div>
   
   <v-card>
+    <!-- Nota: Le quite el boton al implementar YouTube Search con el cual puedo pegar el id o
+         la URL que me da el resultado, por el momento no veo necesario la funcion del boton -->
       <v-form @submit.prevent="Search(videoInfo)" ref="form" v-model="valid" lazy-validation>
           <v-layout align-center justify-center>
-              <v-flex md8 xs8 sm8>
+              <v-flex md12 xs12 sm12>
                   <v-text-field 
                       required
                       label="Busqueda / ID / URL "
@@ -13,17 +15,10 @@
 
                   </v-text-field>
               </v-flex>
-              <v-flex md3 xs3 sm3>
-                  <v-btn outline large type="submit" color="primary">Buscar 
-                    <v-progress-circular v-if="searching"
-                      :size="20"
-                      color="primary"
-                      indeterminate
-                    ></v-progress-circular>
-
+              <!-- <v-flex md3 xs3 sm3>
+                  <v-btn type="submit" color="primary">Buscar 
                   </v-btn>
-                  <!-- <router-link outline large to="/result">click</router-link> -->
-              </v-flex>
+              </v-flex> -->
           </v-layout>
 
           <ListVideosResult/>

@@ -1,7 +1,8 @@
 <template>
+<v-responsive :aspect-ratio="16/9">
 <div v-if="itemYoutube != null">
     <v-layout row>
-        <v-flex xs6 sm6 md6 lg6 xl6>
+        <v-flex xs12 sm6 md6 lg6 xl6>
           <v-card >
             <v-img
             :src="itemYoutube.image"
@@ -15,7 +16,10 @@
                 </v-card-title>
             </v-card>
         </v-flex>
-        <v-flex xs6 sm6 md6 lg6 xl6>
+    </v-layout>
+    
+    <v-layout>
+        <v-flex xs12 sm6 md6 lg6 xl6>
             <v-card>
                 <v-toolbar color="cyan" dark>
                     <v-toolbar-title>Download Video</v-toolbar-title>
@@ -33,14 +37,16 @@
                             <v-list-tile-sub-title>Resolucion: {{ video.resolucion }}</v-list-tile-sub-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <v-btn @click="addToTailDownload(video, itemYoutube.title,'video',video.extencion, itemYoutube.image)" small>Agregar</v-btn>
+                            <v-btn fab dark color="indigo" @click="addToTailDownload(video, itemYoutube.title,'video',video.extencion, itemYoutube.image)" small>
+                                <v-icon dark>add</v-icon>
+                            </v-btn>
                         </v-list-tile-action>
                     </v-list-tile>
                 </v-list>
             </v-card>
         </v-flex>
-
     </v-layout>
+
     <!-- <v-layout row fluid>
         <v-flex justify-center md6>
             <span class="font-weight-light"> Progreso de descarga </span>
@@ -56,9 +62,9 @@
             <span class="font-weight-light"> {{ CurrentDownload }} </span>
         </v-flex>
     </v-layout> -->
-    <v-layout v-if="itemYoutube != null" row>
+    <v-layout align-content-start>
         
-        <v-flex xs6 sm6 md6 lg6 xl6>
+        <v-flex xs12 sm6 md6 lg6 xl6>
             <v-card>
                 <v-toolbar color="cyan" dark>
                     <v-toolbar-title>Download Mp3</v-toolbar-title>
@@ -76,7 +82,9 @@
                             <v-list-tile-sub-title>Bitrate: {{ audio.bitrate }}</v-list-tile-sub-title>
                         </v-list-tile-content>
                         <v-list-tile-action>
-                            <v-btn @click="addToTailDownload(audio, itemYoutube.title, 'audio','mp3', itemYoutube.image)" small>Agregar</v-btn>
+                            <v-btn small fab dark color="indigo" @click="addToTailDownload(audio, itemYoutube.title, 'audio','mp3', itemYoutube.image)"> 
+                                <v-icon dark>add</v-icon>
+                            </v-btn>
                         </v-list-tile-action>
                     </v-list-tile>
                 </v-list>
@@ -84,6 +92,7 @@
         </v-flex>
     </v-layout>
 </div>
+</v-responsive>
 </template>
 
 <script>

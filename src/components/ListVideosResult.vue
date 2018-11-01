@@ -1,20 +1,20 @@
 <template>
     <div v-if="VideosSearch">
         <v-layout v-for="video in VideosSearch" :key="video.snippet.title" row>
-            <v-flex xs12>
+            <v-flex md12 xs12 sm12>
             <v-card color="cyan darken-2" class="white--text">
               <v-layout>
-                <v-flex xs5>
+                <v-flex md5 xs5 sm5>
                   <v-img
                     :src="video.snippet.thumbnails.high.url"
                     height="130px"
                     contain
                   ></v-img>
                 </v-flex>
-                <v-flex xs7>
+                <v-flex md7 xs7 sm7>
                   <v-card-title secondary-title>
                     <div>
-                      <div class="headline">{{video.snippet.title}}</div>
+                      <div class="title">{{video.snippet.title}}</div>
                       <div>{{ video.snippet.channelTitle}}</div>
                       <div>{{video.snippet.publishedAt}}</div>
                     </div>

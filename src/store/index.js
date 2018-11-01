@@ -14,7 +14,8 @@ export default new Vuex.Store({
         currentDownload: false,
         ValueDownload: 0,
         searching: false,
-        VideosResultSearch: []
+        VideosResultSearch: [],
+        nameCurrentDownload: ''
     },
     getters: {
         getListVideos: state => state.listVideos,
@@ -25,7 +26,8 @@ export default new Vuex.Store({
         getcurrentDownload: state => state.currentDownload,
         getValueDownload: state => state.ValueDownload,
         getSearching: state => state.searching,
-        getVideosResultSearch: state => state.VideosResultSearch 
+        getVideosResultSearch: state => state.VideosResultSearch,
+        getnameCurrentDownload: state => state.nameCurrentDownload
     },
     mutations: {
         LOAD_RESULT: (state, payload) => {
@@ -48,7 +50,8 @@ export default new Vuex.Store({
             if (index !== -1) state.tailDownload.splice(index, 1);
         },
         CURRENT_DOWNLOAD: (state, payload) => {
-            state.currentDownload = payload
+            state.currentDownload = payload.activate
+            state.nameCurrentDownload = payload.name
         },
         LOAD_LIST_VIDEOS_RESULT:(state, payload) => {
             console.log(payload.data);
@@ -78,7 +81,7 @@ export default new Vuex.Store({
         },
         downloadItem(context, data) {
             console.log(data);
-            context.commit('CURRENT_DOWNLOAD', true)
+            context.commit('CURRENT_DOWNLOAD', {activate: true, name: data.name})
 
             let name = data.name + ' - EdyPro',
                 type = data.type,

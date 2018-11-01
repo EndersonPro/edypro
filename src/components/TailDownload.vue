@@ -63,6 +63,7 @@ export default {
       },
       downloadItem(item){
           this.$store.dispatch('downloadItem', item)
+          this.deleteItem(item)
       }
   }
 };
