@@ -2,7 +2,7 @@
 <v-responsive :aspect-ratio="16/9">
 <div v-if="itemYoutube != null">
     <v-layout row>
-        <v-flex xs12 sm6 md6 lg6 xl6>
+        <v-flex xs12 offset-sm2 offset-md2 offset-lg2 sm8 md8 lg8 xl8>
           <v-card >
             <v-img
             :src="itemYoutube.image"
@@ -19,7 +19,7 @@
     </v-layout>
     
     <v-layout>
-        <v-flex xs12 sm6 md6 lg6 xl6>
+        <v-flex xs12 offset-sm2 offset-md2 offset-lg2 sm8 md8 lg8 xl8>
             <v-card>
                 <v-toolbar color="cyan" dark>
                     <v-toolbar-title>Download Video</v-toolbar-title>
@@ -62,9 +62,9 @@
             <span class="font-weight-light"> {{ CurrentDownload }} </span>
         </v-flex>
     </v-layout> -->
-    <v-layout align-content-start>
+    <v-layout align-content-center>
         
-        <v-flex xs12 sm6 md6 lg6 xl6>
+        <v-flex xs12 offset-sm2 offset-md2 offset-lg2 sm8 md8 lg8 xl8>
             <v-card>
                 <v-toolbar color="cyan" dark>
                     <v-toolbar-title>Download Mp3</v-toolbar-title>

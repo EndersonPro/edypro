@@ -6,8 +6,9 @@
         <v-flex xs12 sm12 md12 lg12 xl12>
           <v-card>
             <v-card-text>
-              <p class="text-xs-center text-md-center display-2 font-weight-light font-italic">{{name}}</p>
-              <p class="text-xs-center headline text-md-center display-2 font-weight-light font-italic">{{subname}}</p>
+              <p class="text-xs-center display-2 font-weight-light font-italic">{{name}}
+                <span class="text-xs-center headline text-md-center body-2 font-weight-light font-italic">{{subname}}</span>
+              </p>
             </v-card-text>
           </v-card>
         </v-flex>

@@ -56,7 +56,6 @@ export default new Vuex.Store({
             state.nameCurrentDownload = payload.name
         },
         LOAD_LIST_VIDEOS_RESULT: (state, payload) => {
-            console.log(payload.data);
             state.VideosResultSearch = payload.query != '' ? payload.data : null
         },
         ERROR: (state, payload) => {
@@ -76,7 +75,6 @@ export default new Vuex.Store({
                     context.commit('LOAD_RESULT', data.data)
                 })
                 .catch(err => {
-                    console.log(err);
                     context.commit('ERROR', true)
                 })
 
@@ -88,9 +86,7 @@ export default new Vuex.Store({
             context.commit('DELETE_LIST_DOWNLOAD', data)
         },
         downloadItem(context, data) {
-            console.log(data);
             context.commit('CURRENT_DOWNLOAD', { activate: true, name: data.name })
-
             let name = data.name + ' - EdyPro',
                 type = data.type,
                 extention = data.extention,
@@ -131,7 +127,10 @@ export default new Vuex.Store({
                     document.body.removeChild(link);
                     context.commit('CURRENT_DOWNLOAD', false)
                     context.state.ValueDownload = 0
-                });
+                })
+                .then(() => {
+                    context.commit('DELETE_LIST_DOWNLOAD', data)
+                })
         },
         loadListVideosResult(context, data) {
             context.commit('LOAD_LIST_VIDEOS_RESULT', data)

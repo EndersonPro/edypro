@@ -1,7 +1,7 @@
 <template>
 <div> 
     <p class="text-xs-center">{{ value}} %</p>
-    <v-progress-linear v-model="value">  </v-progress-linear>
+    <v-progress-linear color="green darken-2" v-model="value">  </v-progress-linear>
 </div>
 </template>
 
