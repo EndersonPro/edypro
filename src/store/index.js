@@ -15,7 +15,8 @@ export default new Vuex.Store({
         ValueDownload: 0,
         searching: false,
         VideosResultSearch: [],
-        nameCurrentDownload: ''
+        nameCurrentDownload: '',
+        error: false
     },
     getters: {
         getListVideos: state => state.listVideos,
@@ -27,7 +28,8 @@ export default new Vuex.Store({
         getValueDownload: state => state.ValueDownload,
         getSearching: state => state.searching,
         getVideosResultSearch: state => state.VideosResultSearch,
-        getnameCurrentDownload: state => state.nameCurrentDownload
+        getnameCurrentDownload: state => state.nameCurrentDownload,
+        getError: state => state.error
     },
     mutations: {
         LOAD_RESULT: (state, payload) => {
@@ -53,9 +55,12 @@ export default new Vuex.Store({
             state.currentDownload = payload.activate
             state.nameCurrentDownload = payload.name
         },
-        LOAD_LIST_VIDEOS_RESULT:(state, payload) => {
+        LOAD_LIST_VIDEOS_RESULT: (state, payload) => {
             console.log(payload.data);
             state.VideosResultSearch = payload.query != '' ? payload.data : null
+        },
+        ERROR: (state, payload) => {
+            state.error = payload
         }
     },
     actions: {
@@ -70,7 +75,10 @@ export default new Vuex.Store({
                 .then(data => {
                     context.commit('LOAD_RESULT', data.data)
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    console.log(err);
+                    context.commit('ERROR', true)
+                })
 
         },
         addToTailDownload: (context, data) => {
@@ -81,7 +89,7 @@ export default new Vuex.Store({
         },
         downloadItem(context, data) {
             console.log(data);
-            context.commit('CURRENT_DOWNLOAD', {activate: true, name: data.name})
+            context.commit('CURRENT_DOWNLOAD', { activate: true, name: data.name })
 
             let name = data.name + ' - EdyPro',
                 type = data.type,
@@ -125,8 +133,12 @@ export default new Vuex.Store({
                     context.state.ValueDownload = 0
                 });
         },
-        loadListVideosResult(context, data){
+        loadListVideosResult(context, data) {
             context.commit('LOAD_LIST_VIDEOS_RESULT', data)
+        },
+        NoError(context, data) {
+            console.log(data);
+            context.commit('ERROR', data)
         }
     }
 })

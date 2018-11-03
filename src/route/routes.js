@@ -5,7 +5,6 @@ import Search from '../components/Search'
 import Tail from '../components/TailDownload'
 import About from '../components/About'
 
-
 Vue.use(Router)
 
 export default new Router({
@@ -21,7 +20,7 @@ export default new Router({
             component: ItemYoutube
         },
         {
-            path:'/cola',
+            path:'/lista-de-descargas',
             name:'Tail',
             component: Tail
         },
@@ -30,7 +29,6 @@ export default new Router({
             name:'About',
             component: About
         }
-
     ],
     mode:'history'
 })

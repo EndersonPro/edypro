@@ -46,6 +46,24 @@
 
     </v-footer> -->
 
+    <v-snackbar
+      v-model="error"
+      :color="color"
+      :multi-line="mode === 'multi-line'"
+      :timeout="timeout"
+      :vertical="mode === 'vertical'"
+    >
+      {{ text }}
+      <v-btn
+        dark
+        flat
+        @click="NoError()"
+      >
+        Cerrar
+      </v-btn>
+    </v-snackbar>
+
+
     <v-footer
     dark
     height="auto"
@@ -74,22 +92,28 @@ export default {
   data() {
     return {
       name: "EDY",
-      subname:'"Easy Download YouTube"',
-      icons: [
-        'fab fa-facebook',
-        'fab fa-twitter',
-        'fab fa-google-plus',
-        'fab fa-linkedin',
-        'fab fa-instagram'
-      ]
+      subname: '"Easy Download YouTube"',
+      color: "red darken-2",
+      mode: "",
+      timeout: 0,
+      text:
+        "Ha ocurrido un error al obtener los detalles de la cancion, intente nuevamente por favor o elija otro video"
     };
   },
   computed: {
     currentDownload() {
       return this.$store.getters.getcurrentDownload;
     },
-    nameCurrentDownload(){
-      return this.$store.getters.getnameCurrentDownload
+    nameCurrentDownload() {
+      return this.$store.getters.getnameCurrentDownload;
+    },
+    error() {
+      return this.$store.getters.getError;
+    }
+  },
+  methods: {
+    NoError() {
+      this.$store.dispatch("NoError", false);
     }
   },
   components: {
@@ -102,17 +126,17 @@ export default {
 </script>
 
 <style>
-.moveInUp-enter-active{
+.moveInUp-enter-active {
   animation: fadeIn 1s ease-in;
 }
-@keyframes fadeIn{
-  0%{
+@keyframes fadeIn {
+  0% {
     opacity: 0;
   }
-  50%{
+  50% {
     opacity: 0.5;
   }
-  100%{
+  100% {
     opacity: 1;
   }
 }

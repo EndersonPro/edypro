@@ -92,6 +92,26 @@
         </v-flex>
     </v-layout>
 </div>
+ <v-snackbar
+      v-model="snackbar"
+      :color="color"
+      :bottom="y === 'bottom'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :right="x === 'right'"
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+      {{ text }}
+      <!-- <v-btn
+        color="pink"
+        flat
+        @click="snackbar = false"
+      >
+        Cerrar
+      </v-btn> -->
+    </v-snackbar>
 </v-responsive>
 </template>
 
@@ -104,6 +124,17 @@
 /* Esta funcionando bien la API, el archivo se descarga correctamente... Continuar con detalles */
 
 export default {
+  data() {
+    return {
+      snackbar: false,
+      text: "",
+      y: "top",
+      color:"blue darken-3",
+      x: null,
+      mode: "",
+      timeout: 6000
+    };
+  },
   computed: {
     itemYoutube() {
       return this.$store.getters.getvideoInfo;
@@ -116,9 +147,11 @@ export default {
     }
   },
   methods: {
-    addToTailDownload(info, name, type, extention, img){
-        let data = { info, name, type, extention, img } 
-        this.$store.dispatch("addToTailDownload", data);
+    addToTailDownload(info, name, type, extention, img) {
+      let data = { info, name, type, extention, img };
+      this.snackbar = true;
+      this.text = name + " Agregado a la cola de descarga";
+      this.$store.dispatch("addToTailDownload", data);
     },
     /* Metodo para recomendar una descarga */
     downloadRecommended(item) {

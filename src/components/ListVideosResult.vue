@@ -1,6 +1,6 @@
 <template>
     <div v-if="VideosSearch">
-        <v-layout v-for="video in VideosSearch" :key="video.snippet.title" row>
+        <v-layout v-for="video in VideosSearch" :key="video.id.videoId" row>
             <v-flex md12 xs12 sm12>
             <v-card color="cyan darken-2" class="white--text">
               <v-layout>

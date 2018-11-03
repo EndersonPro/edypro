@@ -4,7 +4,8 @@
   <v-card>
     <!-- Nota: Le quite el boton al implementar YouTube Search con el cual puedo pegar el id o
          la URL que me da el resultado, por el momento no veo necesario la funcion del boton -->
-      <v-form @submit.prevent="Search(videoInfo)" ref="form" v-model="valid" lazy-validation>
+      <!-- <v-form @submit.prevent="Search(videoInfo)" ref="form" v-model="valid" lazy-validation>
+      </v-form> -->
           <v-layout align-center justify-center>
               <v-flex md12 xs12 sm12>
                   <v-text-field 
@@ -20,11 +21,8 @@
                   </v-btn>
               </v-flex> -->
           </v-layout>
-
-          <ListVideosResult/>
-          
-      </v-form>
   </v-card>
+          <ListVideosResult/>
 
 </div>
 </template>
