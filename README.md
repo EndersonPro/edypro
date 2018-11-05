@@ -14,7 +14,7 @@ Front End:
 Back End:
 - Flask
 
-Configuraciones para desplejar en tu computador:
+Configuraciones para desplegar en tu computador:
 
 1. Clonar el proyecto con git o descargand el `.zip`  
 
