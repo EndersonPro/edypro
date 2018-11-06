@@ -7,10 +7,12 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "load": "node server.js"
+    "load": "node server.js",
+    "start-electron":"electron electron.index.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "electron": "^3.0.8",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
     "vue": "^2.5.3",

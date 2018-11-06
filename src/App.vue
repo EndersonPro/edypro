@@ -67,15 +67,15 @@
 
     <v-footer
     dark
+    app
     height="auto"
     v-if="currentDownload"
   >
     <v-card class="flex" flat tile>
-      <p class="text-xs-center"><strong class="subheading">{{ nameCurrentDownload }}</strong></p>
       <ProgressDownload/>
-      <v-card-actions class="grey darken-3 justify-center">
+      <!-- <v-card-actions class="grey darken-3 justify-center">
         &copy;2018 — <strong>Enderson Vizcaino</strong>
-      </v-card-actions>
+      </v-card-actions> -->
     </v-card>
   </v-footer>
   </v-app>
@@ -104,9 +104,6 @@ export default {
   computed: {
     currentDownload() {
       return this.$store.getters.getcurrentDownload;
-    },
-    nameCurrentDownload() {
-      return this.$store.getters.getnameCurrentDownload;
     },
     error() {
       return this.$store.getters.getError;

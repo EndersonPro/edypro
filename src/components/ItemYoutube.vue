@@ -46,22 +46,6 @@
             </v-card>
         </v-flex>
     </v-layout>
-
-    <!-- <v-layout row fluid>
-        <v-flex justify-center md6>
-            <span class="font-weight-light"> Progreso de descarga </span>
-            <v-progress-circular
-                :rotate="360"
-                :size="100"
-                :width="15"
-                :value="valueDownload"
-                color="teal"
-                >
-                {{ valueDownload }}
-            </v-progress-circular>
-            <span class="font-weight-light"> {{ CurrentDownload }} </span>
-        </v-flex>
-    </v-layout> -->
     <v-layout align-content-center>
         
         <v-flex xs12 offset-sm2 offset-md2 offset-lg2 sm8 md8 lg8 xl8>
