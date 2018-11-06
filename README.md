@@ -46,4 +46,4 @@ Configuraciones para desplegar en tu computador:
    npm run build
    ```
 
-   > Enderson VIzcaino 
+   > Enderson Vizcaino 
