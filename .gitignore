@@ -9,3 +9,8 @@ yarn-error.log
 *.ntvs*
 *.njsproj
 *.sln
+dist/linux-unpacked
+dist/builder-effective-config.yaml
+dist/edy_1.0.0_amd64.snap
+dist/edy-1.0.0-x86_64.AppImage
+dist/latest-linux.yml

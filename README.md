@@ -8,6 +8,7 @@ Esta aplicacion se realizo usando las siguientes tecnologias.
 
 Front End:
 - Vue
+- Vuetify
 - VueRoute
 - Vuex
 

@@ -1,6 +1,6 @@
 <template>
 <div>
-    <p class="text-xs-center text-truncate"><strong class="subheading">{{ nameCurrentDownload }} Nombre de cancion Nombre de cancion Nombre de cancion Nombre de cancion Nombre de cancion </strong></p>
+    <p class="text-xs-center text-truncate"><strong class="subheading">{{ nameCurrentDownload }}</strong></p>
     <v-progress-linear color="green darken-2" v-model="value">  </v-progress-linear>
     <p class="text-xs-center">{{ value}} %</p>
 </div>

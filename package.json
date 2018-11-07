@@ -4,17 +4,15 @@
   "version": "1.0.0",
   "author": "EndersonPro <enjaviga@gmail.com>",
   "private": true,
+  "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "load": "node server.js",
-    "start-electron":"electron electron.index.js"
+    "load": "node server.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "electron": "^3.0.8",
     "express": "^4.16.4",
-    "lodash": "^4.17.11",
     "vue": "^2.5.3",
     "vue-router": "^3.0.1",
     "vuetify": "^1.0.0",
@@ -29,8 +27,7 @@
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.4",
     "style-loader": "^0.13.1",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.5.3",
     "vuex": "^3.0.1",
