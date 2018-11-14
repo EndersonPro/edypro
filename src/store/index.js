@@ -98,7 +98,7 @@ export default new Vuex.Store({
             let pro = "https://cors-anywhere.herokuapp.com/";
 
             axios
-                .get(pro + url, {
+                .get(pro+url, {
                     responseType: "blob",
                     onDownloadProgress: progressEvent => {
                         const totalLength = progressEvent.lengthComputable
