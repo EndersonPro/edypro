@@ -96,7 +96,6 @@ export default new Vuex.Store({
             this.CurrentDownload = "Nueva descarga en curso";
 
             let pro = "https://cors-anywhere.herokuapp.com/";
-
             axios
                 .get(pro+url, {
                     responseType: "blob",
