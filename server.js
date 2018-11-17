@@ -3,10 +3,10 @@ const path = require('path')
 const port = process.env.PORT || 8080
 const app = express()
 
-/* app.use(express.static(path.join(__dirname,'dist'))); */
+app.use(express.static(path.join(__dirname,'dist')));
 
 app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(__dirname,'index.html'))
+    res.sendFile(path.join(__dirname,'dist'))
 })
 
 app.listen(port, ()=> console.log("Servidor corriendo en puerto ", port))
