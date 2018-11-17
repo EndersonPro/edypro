@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import { APIWEB, LOCAL } from '../helpers/uri'
 
 Vue.use(Vuex)
 
@@ -33,12 +34,12 @@ export default new Vuex.Store({
     },
     mutations: {
         LOAD_RESULT: (state, payload) => {
-            state.listAudios = payload['data'].audiostream
-            state.listVideos = payload['data'].videostream
+            state.listAudios = payload.data['data'].audiostream
+            state.listVideos = payload.data['data'].videostream
             state.videoInfo = {
-                title: payload['data'].titulo,
-                image: payload['data'].imagen,
-                duration: payload['data'].duracion
+                title: payload.data['data'].titulo,
+                image: payload.img,
+                duration: payload.data['data'].duracion
             }
             state.searching = false;
             /* state.listAudios = payload.Audios
@@ -63,16 +64,17 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        loadResult: (context, query) => {
+        loadResult: (context, data) => {
             context.state.searching = true;
             context.state.videoInfo = null;
 
-            let local = 'http://127.0.0.1:5000/api/'
-            let APIWEB = 'https://endersonpro.pythonanywhere.com/api/'
-
-            axios.get(`${APIWEB}${query}`)
-                .then(data => {
-                    context.commit('LOAD_RESULT', data.data)
+            axios.get(`${APIWEB}${data.id}`)
+                .then(r => {
+                    let videoInfo = {
+                        data: r.data,
+                        img: data.img
+                    }
+                    context.commit('LOAD_RESULT', videoInfo)
                 })
                 .catch(err => {
                     context.commit('ERROR', true)
@@ -97,7 +99,7 @@ export default new Vuex.Store({
 
             let pro = "https://cors-anywhere.herokuapp.com/";
             axios
-                .get(pro+url, {
+                .get(pro + url, {
                     responseType: "blob",
                     onDownloadProgress: progressEvent => {
                         const totalLength = progressEvent.lengthComputable

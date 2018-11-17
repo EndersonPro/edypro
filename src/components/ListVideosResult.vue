@@ -16,7 +16,7 @@
                           <span class="headline">{{video.snippet.title}}</span>
                         </v-flex>
                       </v-layout>
-                      <v-btn small color="green accent-3" v-on:click="loadVideo(video.id.videoId)"> Descargar <v-icon>save_alt</v-icon> </v-btn>
+                      <v-btn small color="green accent-3" v-on:click="loadVideo(video.id.videoId,video.snippet.thumbnails.high.url)"> Descargar <v-icon>save_alt</v-icon> </v-btn>
                     </v-container>
                   </v-img>
                  <!--  <v-img
@@ -48,8 +48,12 @@ export default {
     }
   },
   methods:{
-      loadVideo: function(id){
-        this.$store.dispatch("loadResult", id);
+      loadVideo: function(id, img){
+        let data = {
+          id,
+          img
+        }
+        this.$store.dispatch("loadResult", data);
         /* Cambiando de ruta */
         this.$router.push({ name: "Result" });
       }
