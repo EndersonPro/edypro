@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import { APIWEB, LOCAL } from '../helpers/uri'
+import ID3Writer from 'browser-id3-writer';
 
 Vue.use(Vuex)
 
@@ -88,11 +89,14 @@ export default new Vuex.Store({
             context.commit('DELETE_LIST_DOWNLOAD', data)
         },
         downloadItem(context, data) {
+            /* Aca es donde hago las descargas de las canciones....  */
+            /**
+             *  Empezarè a implementar un funcion para poder agregarle los metadatos a los archivos descargados..
+             */
             context.commit('CURRENT_DOWNLOAD', { activate: true, name: data.name })
-            let name = data.name + ' - EdyPro',
-                type = data.type,
-                extention = data.extention,
-                url = data.info.url
+
+            let url = data.info.url
+            let { name, type, extention } = data;
 
             const self = this;
             this.CurrentDownload = "Nueva descarga en curso";
@@ -100,7 +104,7 @@ export default new Vuex.Store({
             let pro = "https://cors-anywhere.herokuapp.com/";
             axios
                 .get(pro + url, {
-                    responseType: "blob",
+                    responseType: "arraybuffer", // Cambiar a blob en caso de que no funcione
                     onDownloadProgress: progressEvent => {
                         const totalLength = progressEvent.lengthComputable
                             ? progressEvent.total
@@ -116,8 +120,24 @@ export default new Vuex.Store({
                         }
                     }
                 })
+                .then(buffer => {
+                    console.log(buffer)
+                    let writer = new ID3Writer(buffer.data);
+                    writer
+                        .setFrame("TIT2", name)
+                        .setFrame("TPE1", ["EdyPro", "EndersonPro"])
+                        .setFrame("TALB", "EdyPro")
+                        .setFrame("TYER", 2019)
+                        .setFrame("TCOP", "EdyPro © 2019")
+                        .setFrame("TBPM", 128)
+                        .setFrame("WPAY", "https://edy-pro.herokuapp.com/")
+                        .setFrame("TKEY", "Fbm");
+                    writer.addTag();
+                    let blob = writer.getBlob();
+                    return blob;
+                })
                 .then(res => {
-                    const url = window.URL.createObjectURL(res.data, {
+                    const url = window.URL.createObjectURL(res, {
                         type: `${type}/${extention}`
                     });
                     const link = document.createElement("a");
