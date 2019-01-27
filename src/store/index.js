@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import { APIWEB, LOCAL } from '../helpers/uri'
+import { APIWEB, LOCAL, CoverURL } from '../helpers/uri'
 import ID3Writer from 'browser-id3-writer';
 
 Vue.use(Vuex)
@@ -65,9 +65,9 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        loadResult: (context, data) => {
-            context.state.searching = true;
-            context.state.videoInfo = null;
+        loadResult: ({ commit, state }, data) => {
+            state.searching = true;
+            state.videoInfo = null;
 
             axios.get(`${APIWEB}${data.id}`)
                 .then(r => {
@@ -75,36 +75,99 @@ export default new Vuex.Store({
                         data: r.data,
                         img: data.img
                     }
-                    context.commit('LOAD_RESULT', videoInfo)
+                    commit('LOAD_RESULT', videoInfo)
                 })
                 .catch(err => {
-                    context.commit('ERROR', true)
+                    commit('ERROR', true)
                 })
 
         },
-        addToTailDownload: (context, data) => {
-            context.commit('ADD_DOWNLOAD', data)
+        addToTailDownload: ({ commit }, data) => {
+            commit('ADD_DOWNLOAD', data)
         },
-        deleteToTailDownload: (context, data) => {
-            context.commit('DELETE_LIST_DOWNLOAD', data)
+        deleteToTailDownload: ({ commit }, data) => {
+            commit('DELETE_LIST_DOWNLOAD', data)
         },
-        downloadItem(context, data) {
+        downloadItem({ commit, state }, data) {
             /* Aca es donde hago las descargas de las canciones....  */
             /**
              *  Empezarè a implementar un funcion para poder agregarle los metadatos a los archivos descargados..
+             *  NOTA: Trate de que toda esta funcion "Accion" fuese asincrona para poder usar await, pero al 
+             *  momento de dar clic en descargar daba error, de esta forma funciono pero espero poder mejorarla 
+             *  cuando sepa como corregir ese error. 00:40 27.01.19.
+             * 
              */
-            context.commit('CURRENT_DOWNLOAD', { activate: true, name: data.name })
+            commit('CURRENT_DOWNLOAD', { activate: true, name: data.name })
 
             let url = data.info.url
             let { name, type, extention } = data;
 
-            const self = this;
             this.CurrentDownload = "Nueva descarga en curso";
 
             let pro = "https://cors-anywhere.herokuapp.com/";
-            axios
+
+            if(type=== 'audio' ){
+                axios.get(pro + url, {
+                        responseType: "arraybuffer", // Cambiar a blob en caso de que no funcione
+                        onDownloadProgress: progressEvent => {
+                            const totalLength = progressEvent.lengthComputable
+                                ? progressEvent.total
+                                : progressEvent.target.getResponseHeader("content-length") ||
+                                progressEvent.target.getResponseHeader(
+                                    "x-decompressed-content-length"
+                                );
+                            if (totalLength !== null) {
+                                /* Voy cambiando el valor para el progreso */
+                                state.ValueDownload = Math.round(
+                                    (progressEvent.loaded * 100) / totalLength
+                                );
+                            }
+                        }
+                    })
+                    .then(buffer => {
+                        let writer = new ID3Writer(buffer.data);
+                        /* Obtentiendo a imagen la imagen */
+                        axios.get(CoverURL, { responseType: 'arraybuffer' })
+                            .then(res => {
+                                let coverEdy = res.data;
+                                writer
+                                    .setFrame("TIT2", name)
+                                    .setFrame("TPE1", ["EdyPro", "EndersonPro"])
+                                    .setFrame("TALB", "EdyPro")
+                                    .setFrame("TYER", 2019)
+                                    .setFrame("TCOP", "EdyPro © 2019")
+                                    .setFrame("TBPM", 128)
+                                    .setFrame("WPAY", "https://edy-pro.herokuapp.com/")
+                                    .setFrame("TKEY", "Fbm")
+                                    .setFrame('APIC', {
+                                        type: 3,
+                                        data: coverEdy,
+                                        description: 'EdyPro'
+                                    });
+                                writer.addTag();
+                                let blob = writer.getBlob();
+                                return blob;
+                            }).then(res => {
+                                const url = window.URL.createObjectURL(res, {
+                                    type: `${type}/${extention}`
+                                });
+                                const link = document.createElement("a");
+                                link.href = url;
+                                link.setAttribute("download", name + "." + extention);
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                commit('CURRENT_DOWNLOAD', false)
+                                state.ValueDownload = 0
+                            })
+                            .then(() => {
+                                commit('DELETE_LIST_DOWNLOAD', data)
+                            })
+                    })
+            }else{
+                axios
                 .get(pro + url, {
-                    responseType: "arraybuffer", // Cambiar a blob en caso de que no funcione
+                    responseType: "blob", // Cambiar a blob en caso de que no funcione
                     onDownloadProgress: progressEvent => {
                         const totalLength = progressEvent.lengthComputable
                             ? progressEvent.total
@@ -114,30 +177,14 @@ export default new Vuex.Store({
                             );
                         if (totalLength !== null) {
                             /* Voy cambiando el valor para el progreso */
-                            context.state.ValueDownload = Math.round(
+                            state.ValueDownload = Math.round(
                                 (progressEvent.loaded * 100) / totalLength
                             );
                         }
                     }
                 })
-                .then(buffer => {
-                    console.log(buffer)
-                    let writer = new ID3Writer(buffer.data);
-                    writer
-                        .setFrame("TIT2", name)
-                        .setFrame("TPE1", ["EdyPro", "EndersonPro"])
-                        .setFrame("TALB", "EdyPro")
-                        .setFrame("TYER", 2019)
-                        .setFrame("TCOP", "EdyPro © 2019")
-                        .setFrame("TBPM", 128)
-                        .setFrame("WPAY", "https://edy-pro.herokuapp.com/")
-                        .setFrame("TKEY", "Fbm");
-                    writer.addTag();
-                    let blob = writer.getBlob();
-                    return blob;
-                })
                 .then(res => {
-                    const url = window.URL.createObjectURL(res, {
+                    const url = window.URL.createObjectURL(res.data, {
                         type: `${type}/${extention}`
                     });
                     const link = document.createElement("a");
@@ -146,19 +193,20 @@ export default new Vuex.Store({
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                    context.commit('CURRENT_DOWNLOAD', false)
-                    context.state.ValueDownload = 0
+                    commit('CURRENT_DOWNLOAD', false)
+                    state.ValueDownload = 0
                 })
                 .then(() => {
-                    context.commit('DELETE_LIST_DOWNLOAD', data)
+                    commit('DELETE_LIST_DOWNLOAD', data)
                 })
+            }
+
         },
-        loadListVideosResult(context, data) {
-            context.commit('LOAD_LIST_VIDEOS_RESULT', data)
+        loadListVideosResult({ commit }, data) {
+            commit('LOAD_LIST_VIDEOS_RESULT', data)
         },
-        NoError(context, data) {
-            console.log(data);
-            context.commit('ERROR', data)
+        NoError({ commit }, data) {
+            commit('ERROR', data)
         }
     }
 })

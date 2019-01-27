@@ -1,7 +1,6 @@
 <template>
   <v-app dark>
     <v-container align-content-center>
-
       <v-layout row>
         <v-flex xs12 sm12 md12 lg12 xl12>
           <v-card>
